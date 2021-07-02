@@ -538,6 +538,10 @@ case $DBTYPE in
     ;;
     psql)
         DUMP_OPTS=()
+
+        DUMP_OPTS+=( --disable-triggers --exclude-schema='_timescaledb*' )
+        # Note: The 'CREATE EXTENSION timescaledb' is still included
+
         while read -r table; do
             if [ $HANDLE_UNKNOWN == "ignore" ]; then
                 if elementIn "$table" "${UNKNOWN_TABLES[@]}"; then
